@@ -35,17 +35,18 @@ And use it in your view
 You can set any option the [bootstrap-daterangepicker supports](http://www.daterangepicker.com/#options). You can see the default configuration below:
 
     angular.module("myApp").config (dateRangePickerConfigProvider) ->
-      dateRangePickerConfigProvider.config.locale = 
+      dateRangePickerConfigProvider.config.locale =
         format: 'YYYY-MM-DD'
         fromLabel: 'From'
         toLabel: 'To'
         applyLabel: 'OK'
         cancelLabel: 'Clear'
         customRangeLabel: 'Other'
+        emptyFilterLabel: 'choose date range'
       dateRangePickerConfigProvider.config.ranges =
         'Incoming week': [moment(), moment().add(7, 'days')]
         'Tomorrow': [moment().add(1, 'days'), moment().add(1, 'days')]
         'Today': [moment(), moment()]
         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')]
         'Past week': [moment().subtract(7, 'days'), moment()]
-        'Past 30 days': [moment().subtract(30, 'days'), moment()]  
+        'Past 30 days': [moment().subtract(30, 'days'), moment()]

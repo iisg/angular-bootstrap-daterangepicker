@@ -13,7 +13,8 @@ angular.module('fslab.daterangepicker').provider('dateRangePickerConfig', functi
           toLabel: 'To',
           applyLabel: 'OK',
           cancelLabel: 'Clear',
-          customRangeLabel: 'Other'
+          customRangeLabel: 'Other',
+          emptyFilterLabel: 'choose date range'
         },
         ranges: {
           'Incoming week': [moment(), moment().add(7, 'days')],
@@ -95,9 +96,9 @@ angular.module('fslab.daterangepicker').filter('fslabDateRange', ["dateFilter", 
     return moment(date).format(((ref = dateRangePickerConfig.locale) != null ? ref.format : void 0) || 'YYYY-MM-DD');
   };
   return function(dateRange, labelIfEmpty) {
-    var result;
+    var ref, result;
     if (labelIfEmpty == null) {
-      labelIfEmpty = 'choose date range';
+      labelIfEmpty = ((ref = dateRangePickerConfig.locale) != null ? ref.emptyFilterLabel : void 0) || 'choose date range';
     }
     if (dateRange != null ? dateRange.startDate : void 0) {
       result = formatDate(dateRange.startDate);
