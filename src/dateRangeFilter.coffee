@@ -1,4 +1,4 @@
-angular.module('fslab.daterangepicker').filter 'fslabDateRange', (dateFilter, dateRangePickerConfig) ->
+angular.module('fslab.daterangepicker').filter 'fslabDateRange', (dateRangePickerConfig) ->
 
   formatDate = (date) ->
     moment(date).format(dateRangePickerConfig.locale?.format or 'YYYY-MM-DD')

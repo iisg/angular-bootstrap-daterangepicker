@@ -1,5 +1,60 @@
 angular.module('fslab.daterangepicker', []);
 
+angular.module('fslab.daterangepicker').factory('fslabDateRangePickerDirectiveDef', ["$timeout", "dateRangePickerConfig", function($timeout, dateRangePickerConfig) {
+  return function() {
+    return {
+      require: 'ngModel',
+      scope: {
+        minDate: '=',
+        maxDate: '='
+      },
+      link: function($scope, element, attrs, modelController) {
+        var config, dateRangePicker, displayableRanges, label, maxDate, minDate, range, rangeIsBetweenMinAndMax, ref;
+        minDate = $scope.minDate === 'today' ? moment().startOf('day') : $scope.minDate;
+        maxDate = $scope.maxDate === 'today' ? moment().endOf('day') : $scope.maxDate;
+        config = angular.copy(dateRangePickerConfig);
+        rangeIsBetweenMinAndMax = function(range) {
+          return (!minDate || range[0].isAfter(minDate)) && (!maxDate || range[1].isBefore(maxDate));
+        };
+        displayableRanges = {};
+        ref = config.ranges;
+        for (label in ref) {
+          range = ref[label];
+          if (rangeIsBetweenMinAndMax(range)) {
+            displayableRanges[label] = range;
+          }
+        }
+        config.ranges = displayableRanges;
+        config.maxDate = maxDate;
+        config.minDate = minDate;
+        element.daterangepicker(config);
+        dateRangePicker = element.data('daterangepicker');
+        $scope.$watch((function() {
+          return modelController.$modelValue;
+        }), function(newValue) {
+          if (newValue != null ? newValue.startDate : void 0) {
+            dateRangePicker.setStartDate(moment(newValue.startDate));
+          }
+          if (newValue != null ? newValue.endDate : void 0) {
+            return dateRangePicker.setEndDate(moment(newValue.endDate));
+          }
+        });
+        return $timeout(function() {
+          element.on('apply.daterangepicker', function() {
+            return modelController.$setViewValue({
+              startDate: moment(dateRangePicker.startDate).toDate(),
+              endDate: moment(dateRangePicker.endDate).toDate()
+            });
+          });
+          return element.on('cancel.daterangepicker', function() {
+            return modelController.$setViewValue(void 0);
+          });
+        });
+      }
+    };
+  };
+}]);
+
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 angular.module('fslab.daterangepicker').provider('dateRangePickerConfig', function() {
@@ -36,72 +91,26 @@ angular.module('fslab.daterangepicker').provider('dateRangePickerConfig', functi
   })());
 });
 
-angular.module('fslab.daterangepicker').directive('fslabDateRangePickerButton', function() {
-  return {
-    require: 'ngModel',
-    scope: {
-      ngModel: '=',
-      maxDate: '=',
-      minDate: '='
-    },
-    template: "<button type=\"button\"\n  class=\"form-control fslab-date-range-picker-button\"\n  fslab-date-range-picker\n  max-date=\"maxDate\"\n  min-date=\"minDate\"\n  ng-model=\"ngModel\">\n    {{ ngModel | fslabDateRange }}\n</button>"
-  };
-});
-
-angular.module('fslab.daterangepicker').directive('fslabDateRangePicker', ["$timeout", "dateRangePickerConfig", function($timeout, dateRangePickerConfig) {
-  return {
-    require: 'ngModel',
-    scope: {
-      minDate: '=',
-      maxDate: '='
-    },
-    link: function($scope, element, attrs, modelController) {
-      var config, dateRangePicker, displayableRanges, label, maxDate, minDate, range, rangeIsBetweenMinAndMax, ref;
-      minDate = $scope.minDate === 'today' ? moment().startOf('day') : $scope.minDate;
-      maxDate = $scope.maxDate === 'today' ? moment().endOf('day') : $scope.maxDate;
-      config = angular.copy(dateRangePickerConfig);
-      rangeIsBetweenMinAndMax = function(range) {
-        return (!minDate || range[0].isAfter(minDate)) && (!maxDate || range[1].isBefore(maxDate));
-      };
-      displayableRanges = {};
-      ref = config.ranges;
-      for (label in ref) {
-        range = ref[label];
-        if (rangeIsBetweenMinAndMax(range)) {
-          displayableRanges[label] = range;
-        }
-      }
-      config.ranges = displayableRanges;
-      config.maxDate = maxDate;
-      config.minDate = minDate;
-      element.daterangepicker(config);
-      dateRangePicker = element.data('daterangepicker');
-      $scope.$watch((function() {
-        return modelController.$modelValue;
-      }), function(newValue) {
-        if (newValue != null ? newValue.startDate : void 0) {
-          dateRangePicker.setStartDate(moment(newValue.startDate));
-        }
-        if (newValue != null ? newValue.endDate : void 0) {
-          return dateRangePicker.setEndDate(moment(newValue.endDate));
-        }
-      });
-      return $timeout(function() {
-        element.on('apply.daterangepicker', function() {
-          return modelController.$setViewValue({
-            startDate: moment(dateRangePicker.startDate).toDate(),
-            endDate: moment(dateRangePicker.endDate).toDate()
-          });
-        });
-        return element.on('cancel.daterangepicker', function() {
-          return modelController.$setViewValue(void 0);
-        });
-      });
+angular.module('fslab.daterangepicker').directive('fslabDateRangePickerButton', ["fslabDateRangePickerDirectiveDef", function(fslabDateRangePickerDirectiveDef) {
+  var def, originalLink;
+  def = fslabDateRangePickerDirectiveDef();
+  originalLink = def.link;
+  def.scope.ngModel = '=';
+  return angular.extend(def, {
+    template: '<span class="glyphicon glyphicon-calendar"></span> {{ ngModel | fslabDateRange }}',
+    link: function($scope, $element, $attrs, $ngModelCtrl) {
+      originalLink($scope, $element, $attrs, $ngModelCtrl);
+      $element.addClass('form-control');
+      return $element.attr('type', 'button');
     }
-  };
+  });
 }]);
 
-angular.module('fslab.daterangepicker').filter('fslabDateRange', ["dateFilter", "dateRangePickerConfig", function(dateFilter, dateRangePickerConfig) {
+angular.module('fslab.daterangepicker').directive('fslabDateRangePicker', ["fslabDateRangePickerDirectiveDef", function(fslabDateRangePickerDirectiveDef) {
+  return fslabDateRangePickerDirectiveDef();
+}]);
+
+angular.module('fslab.daterangepicker').filter('fslabDateRange', ["dateRangePickerConfig", function(dateRangePickerConfig) {
   var formatDate;
   formatDate = function(date) {
     var ref;
