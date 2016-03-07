@@ -1,47 +1,30 @@
-# Angular Bootstrap Input Blocker
+# Angular Bootstrap Date Range Picker
 
-Angular Bootstrap Input Blocker is a directive for bootstrap, which allows blocking input with user provided template.
-It is mostly useful for typeahead inputs, where modelValue contains more information than just simple string.
+Angular Bootstrap Date Range Picker directive that uses the [bootstrap-daterangepicker](https://github.com/dangrossman/bootstrap-daterangepicker) beneath.
 
 ## Demo
-Demo can be viewed [here](http://iisg.github.io/input-blocker/).
+[CLICK](http://iisg.github.io/angular-bootstrap-daterangepicker/)
 
 ## Installation
 
 Just require the package using bower:
 
 ```
-bower install iisg/input-blocker --save
+bower install iisg/angular-bootstrap-daterangepicker --save
 ```
 
 ## Usage
 
-*1st step*: Require the `fslab.inputblocker` in your main module.
+Require the `fslab.inputblocker` in your main module.
 
-    angular.module('myApp', [..., 'fslab.inputblocker'])
-    
-*2nd step*: Add `fslab-input-blocker` directive to existing input
-(example with [ui-bootstrap typeahead](http://angular-ui.github.io/bootstrap/#/typeahead)).
-No other attributes are needed.
+    angular.module('myApp', [..., 'fslab.daterangepicker'])
 
-    <input type="text"
-           ng-model="selected"
-           class="form-control"
-           uib-typeahead="browser as browser.name for browser in browsers"
-           typeahead-editable="false"
-           fslab-input-blocker>
-           
-Custom template can be used by assigning value to `fslab-input-blocker`.
+And use it in your view
 
-    <script type="text/ng-template"
-            id="addressTemplate">
-        <a target="_blank" ng-href="{{value.address}}">
-            {{value.name}}
-        </a>
-    </script>
-    <input type="text"
-           ng-model="selected"
-           class="form-control"
-           uib-typeahead="browser as browser.name for browser in browsers"
-           typeahead-editable="false"
-           fslab-input-blocker='addressTemplate'>
+    <button fslab-date-range-picker
+            ng-model="dateRange"
+            class="btn btn-default">
+            {{ dateRange | fslabDateRange }}
+    </button>
+
+TODO
