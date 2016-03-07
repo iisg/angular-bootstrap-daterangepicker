@@ -82,8 +82,35 @@
 
     <div class="row form-group">
         <div class="col-sm-6 col-sm-offset-3 ">
-            <h4>`fslab-date-range-picker-button` directive that creates input-like field:</h4>
+            <h4><code>fslab-date-range-picker-button</code> directive that creates input-like field:</h4>
             <button fslab-date-range-picker-button ng-model="dateRanges.field"></button>
+            <h5>Model:</h5>
+            <pre>{{dateRanges.field | json}}</pre>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-6 col-sm-offset-3 ">
+            <h4>Two fields with the same model</h4>
+            <button fslab-date-range-picker="" ng-model="dateRanges.synchronized" class="btn btn-default">
+                <span class="glyphicon glyphicon-calendar"></span>
+                {{ dateRanges.synchronized | fslabDateRange }}
+            </button>
+            <button fslab-date-range-picker="" ng-model="dateRanges.synchronized" class="btn btn-default">
+                <span class="glyphicon glyphicon-calendar"></span>
+                {{ dateRanges.synchronized | fslabDateRange }}
+            </button>
+            <h5>Model:</h5>
+            <pre>{{dateRanges.synchronized | json}}</pre>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-6 col-sm-offset-3 ">
+            <h4>Works with <code>ng-change</code> etc:</h4>
+            <button fslab-date-range-picker-button ng-model="dateRanges.changing"
+                    ng-change="incrementChanges()"></button>
+            The date has been changed {{ changedTimes }} times.
             <h5>Model:</h5>
             <pre>{{dateRanges.field | json}}</pre>
         </div>
@@ -100,6 +127,10 @@
 <script type="text/javascript">
     angular.module('demo', ['fslab.daterangepicker'])
             .run(function ($rootScope) {
+                $rootScope.changedTimes = 0;
+                $rootScope.incrementChanges = function () {
+                    ++$rootScope.changedTimes;
+                };
                 $rootScope.dateRanges = {
                     predefined: {
                         startDate: moment().subtract(3, 'days'),
