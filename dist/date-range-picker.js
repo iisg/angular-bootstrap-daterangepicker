@@ -29,16 +29,16 @@ angular.module('fslab.daterangepicker').factory('fslabDateRangePickerDirectiveDe
         config.minDate = minDate;
         element.daterangepicker(config);
         dateRangePicker = element.data('daterangepicker');
-        $scope.$watch((function() {
-          return modelController.$modelValue;
-        }), function(newValue) {
+        modelController.$render = function() {
+          var newValue;
+          newValue = modelController.$modelValue;
           if (newValue != null ? newValue.startDate : void 0) {
             dateRangePicker.setStartDate(moment(newValue.startDate));
           }
           if (newValue != null ? newValue.endDate : void 0) {
             return dateRangePicker.setEndDate(moment(newValue.endDate));
           }
-        });
+        };
         return $timeout(function() {
           element.on('apply.daterangepicker', function() {
             return modelController.$setViewValue({

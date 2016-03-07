@@ -25,7 +25,8 @@ angular.module('fslab.daterangepicker').factory 'fslabDateRangePickerDirectiveDe
       element.daterangepicker(config)
       dateRangePicker = element.data('daterangepicker')
 
-      $scope.$watch (-> modelController.$modelValue), (newValue) ->
+      modelController.$render = ->
+        newValue = modelController.$modelValue
         if newValue?.startDate
           dateRangePicker.setStartDate(moment(newValue.startDate))
         if newValue?.endDate
