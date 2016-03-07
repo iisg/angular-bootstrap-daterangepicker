@@ -1,0 +1,43 @@
+{
+  "name": "angular-bootstrap-daterangepicker",
+  "version": "0.1.0",
+  "authors": [
+    "Wojciech Frącz <fraczwojciech@gmail.com>"
+  ],
+  "description": "Angular directive that wraps bootstrap-daterangepicker with a directive.",
+  "main": [
+    "dist/date-range-picker.js"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iisg/angular-bootstrap-daterangepicker"
+  },
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "bootstrap",
+    "angular",
+    "daterangepicker",
+    "agh"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "coffeelint.json",
+    "Gulpfile.coffee",
+    "Gulpfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "angular": "~1.3",
+    "bootstrap": "~3.2",
+    "bootstrap-daterangepicker": "2.1.x",
+    "moment": "~2.9"
+  }
+}
