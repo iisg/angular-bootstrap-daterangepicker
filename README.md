@@ -25,6 +25,10 @@ And use it in your view
             {{ dateRange | fslabDateRange }}
     </button>
 
+Or for button that looks like an input:
+
+    <span fslab-date-range-picker-button ng-model="dateRange"></span>
+
 ## Available directive attributes
 
 * `max-date` should be given in the format specified in the locale configuration or `'today'` if the maximum allowed date should be the same as current date (only past dates)

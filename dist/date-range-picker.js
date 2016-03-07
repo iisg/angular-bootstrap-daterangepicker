@@ -36,6 +36,18 @@ angular.module('fslab.daterangepicker').provider('dateRangePickerConfig', functi
   })());
 });
 
+angular.module('fslab.daterangepicker').directive('fslabDateRangePickerButton', function() {
+  return {
+    require: 'ngModel',
+    scope: {
+      ngModel: '=',
+      maxDate: '=',
+      minDate: '='
+    },
+    template: "<button type=\"button\"\n  class=\"form-control fslab-date-range-picker-button\"\n  fslab-date-range-picker\n  max-date=\"maxDate\"\n  min-date=\"minDate\"\n  ng-model=\"ngModel\">\n    {{ ngModel | fslabDateRange }}\n</button>"
+  };
+});
+
 angular.module('fslab.daterangepicker').directive('fslabDateRangePicker', ["$timeout", "dateRangePickerConfig", function($timeout, dateRangePickerConfig) {
   return {
     require: 'ngModel',
