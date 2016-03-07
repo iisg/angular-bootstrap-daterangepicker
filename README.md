@@ -42,7 +42,7 @@ You can set any option the [bootstrap-daterangepicker supports](http://www.dater
         applyLabel: 'OK'
         cancelLabel: 'Clear'
         customRangeLabel: 'Other'
-      dateRangePickerConfigProvider.config.ranges:
+      dateRangePickerConfigProvider.config.ranges =
         'Incoming week': [moment(), moment().add(7, 'days')]
         'Tomorrow': [moment().add(1, 'days'), moment().add(1, 'days')]
         'Today': [moment(), moment()]
