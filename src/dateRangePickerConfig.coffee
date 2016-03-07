@@ -9,6 +9,7 @@ angular.module('fslab.daterangepicker').provider 'dateRangePickerConfig', ->
           applyLabel: 'OK'
           cancelLabel: 'Clear'
           customRangeLabel: 'Other'
+          emptyFilterLabel: 'choose date range'
         ranges:
           'Incoming week': [moment(), moment().add(7, 'days')]
           'Tomorrow': [moment().add(1, 'days'), moment().add(1, 'days')]

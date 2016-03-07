@@ -3,7 +3,7 @@ angular.module('fslab.daterangepicker').filter 'fslabDateRange', (dateFilter, da
   formatDate = (date) ->
     moment(date).format(dateRangePickerConfig.locale?.format or 'YYYY-MM-DD')
 
-  (dateRange, labelIfEmpty = 'choose date range') ->
+  (dateRange, labelIfEmpty = dateRangePickerConfig.locale?.emptyFilterLabel or 'choose date range') ->
     if dateRange?.startDate
       result = formatDate(dateRange.startDate)
       if moment(dateRange.startDate).startOf('day').isBefore(moment(dateRange.endDate).startOf('day'))
