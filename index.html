@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-framework="angularjs">
+<head>
+    <meta charset="utf-8">
+    <title>Angular Bootstrap Input Blocker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.18/daterangepicker.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css"/>
+    <style>[ng-cloak] {
+        display: none;
+    }</style>
+</head>
+<body ng-app="demo">
+<div class="container">
+    <h3>
+        <b>Angular Bootstrap Daterangepicker example</b>
+    </h3>
+
+    <div class="row form-group">
+        <div class="col-sm-6 col-sm-offset-3 ">
+            <h4>Default date range picker</h4>
+            <button fslab-date-range-picker="" ng-model="dateRanges.default" class="btn btn-default">
+                <span class="glyphicon glyphicon-calendar"></span>
+                {{ dateRanges.default | fslabDateRange }}
+            </button>
+            <h5>Model:</h5>
+            <pre>{{dateRanges.default | json}}</pre>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-6 col-sm-offset-3 ">
+            <h4>With <code>max-date="'today'"</code> (past dates only):</h4>
+            <button fslab-date-range-picker="" ng-model="dateRanges.past" class="btn btn-default" max-date="'today'">
+                <span class="glyphicon glyphicon-calendar"></span>
+                {{ dateRanges.past | fslabDateRange }}
+            </button>
+            <h5>Model:</h5>
+            <pre>{{dateRanges.past | json}}</pre>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-6 col-sm-offset-3 ">
+            <h4>With <code>min-date="'today'"</code> (future dates only):</h4>
+            <button fslab-date-range-picker="" ng-model="dateRanges.future" class="btn btn-default" min-date="'today'">
+                <span class="glyphicon glyphicon-calendar"></span>
+                {{ dateRanges.future | fslabDateRange }}
+            </button>
+            <h5>Model:</h5>
+            <pre>{{dateRanges.future | json}}</pre>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-6 col-sm-offset-3 ">
+            <h4>With <code>max-date="'2016-01-01'"</code>:</h4>
+            <button fslab-date-range-picker="" ng-model="dateRanges.maxPredefined" class="btn btn-default"
+                    max-date="'2016-01-01'">
+                <span class="glyphicon glyphicon-calendar"></span>
+                {{ dateRanges.maxPredefined | fslabDateRange }}
+            </button>
+            <h5>Model:</h5>
+            <pre>{{dateRanges.maxPredefined | json}}</pre>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-6 col-sm-offset-3 ">
+            <h4>With predefined date:</h4>
+            <button fslab-date-range-picker="" ng-model="dateRanges.predefined" class="btn btn-default"
+                    max-date="'2016-01-01'">
+                <span class="glyphicon glyphicon-calendar"></span>
+                {{ dateRanges.predefined | fslabDateRange }}
+            </button>
+            <h5>Model:</h5>
+            <pre>{{dateRanges.predefined | json}}</pre>
+        </div>
+    </div>
+</div>
+<a class="github-fork-ribbon" href="https://github.com/iisg/angular-bootstrap-daterangepicker" title="Code on github">
+    Code on GitHub
+</a>
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.18/daterangepicker.min.js"></script>
+<script src="https://rawgit.com/iisg/angular-bootstrap-daterangepicker/master/dist/date-range-picker.js"></script>
+<script type="text/javascript">
+    angular.module('demo', ['fslab.daterangepicker'])
+            .run(function ($rootScope) {
+                $rootScope.dateRanges = {
+                    predefined: {
+                        startDate: moment().subtract(3, 'days'),
+                        endDate: moment().add(3, 'days')
+                    }
+                };
+            });
+</script>
+</body>
+</html>
